@@ -1,0 +1,21 @@
+@use "../../colors.scss";
+
+.dashboardHeader {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 3rem;
+  font-weight: 600;
+  background-color: var(--background-color);
+  position: sticky;
+  top: 0;
+
+  p {
+    margin: 0;
+  }
+
+  p.tutti {
+    color: var(--tutti-info);
+  }
+}

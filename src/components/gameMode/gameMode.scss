@@ -1,0 +1,84 @@
+@use "../../colors.scss";
+
+.gameMode {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  h1 {
+    margin: 0;
+  }
+
+  .mode {
+    width: 100px;
+    font-size: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 1rem;
+    background-color: var(--primary-color);
+    transition: 0.3s;
+
+    &:active {
+      color: var(--primary-color);
+      background-color: var(--secondary-background);
+      transition: 0.3s;
+    }
+  }
+
+  .cordsTable {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    .cord {
+      width: 16px;
+      height: 16px;
+      background-color: var(--cord-inactive);
+      border: 1px solid white;
+    }
+
+    .cords {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+
+      h4 {
+        margin: 0;
+      }
+    }
+  }
+
+  .buttons {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    gap: 1rem;
+
+    button {
+      background-color: var(--primary-color);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--black);
+      border: 2px solid var(--primary-color);
+      width: 12.5%;
+      height: 100%;
+      border-radius: 1rem;
+      font-size: 40px;
+      transition: 0.1s;
+
+      &:active {
+        color: var(--primary-color);
+        background-color: var(--background-color);
+        transition: 0.1s;
+      }
+    }
+  }
+}

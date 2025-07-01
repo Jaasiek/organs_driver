@@ -1,0 +1,21 @@
+@use "./colors.scss";
+
+body {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  margin: 0;
+  color: var(--text-color);
+  background-color: var(--background-color);
+
+  button,
+  a {
+    transition: 0.2s;
+  }
+
+  button:active,
+  a:active {
+    transform: scale(0.9);
+    transition: 0.2s;
+  }
+}

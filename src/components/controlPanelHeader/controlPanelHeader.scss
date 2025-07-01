@@ -1,0 +1,76 @@
+@use "../../colors.scss";
+
+.controlPanelHeader {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  background-color: var(--background-color);
+  position: sticky;
+  padding: 1rem;
+  top: 0;
+
+  .logo,
+  a {
+    width: 64px;
+    height: 64px;
+    color: var(--primary-color);
+  }
+
+  p {
+    margin: 0;
+    font-size: 20px;
+  }
+
+  .message {
+    position: absolute;
+    text-align: center;
+    align-self: center;
+    top: 2rem;
+    width: 90%;
+    border-radius: 1rem;
+    background-color: var(--black-rgba);
+    color: var(--primary-color);
+    right: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: slideDownFade 0.5s ease-out;
+    animation-fill-mode: forwards; // zachowuje ostatni stan
+
+    h1 {
+      font-size: 30px;
+      padding: 10px;
+      margin: 0;
+    }
+
+    &.fadeOut {
+      animation: fadeOutUp 0.5s ease-in;
+      animation-fill-mode: forwards;
+    }
+  }
+}
+
+@keyframes slideDownFade {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-50%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+@keyframes fadeOutUp {
+  0% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-50%);
+  }
+}
