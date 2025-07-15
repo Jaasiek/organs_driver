@@ -20,7 +20,7 @@ export function Clock() {
       setTime(getCurrentTime());
     }, 1000);
 
-    return () => clearInterval(interval); // czyść po odmontowaniu
+    return () => clearInterval(interval);
   }, []);
 
   return <div>{time}</div>;

@@ -165,7 +165,16 @@ export default function UserProfile() {
           />
           {message && <p className="message">{message}</p>}
           <div className="buttons">
-            <button type="submit">Dodaj użytkownika</button>
+            <button
+              type="submit"
+              onClick={() => {
+                setCreatingUser(false);
+                setMessage("");
+                setMode("Zaloguj się");
+              }}
+            >
+              Dodaj użytkownika
+            </button>
             <button
               type="button"
               onClick={() => {

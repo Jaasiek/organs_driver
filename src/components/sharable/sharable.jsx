@@ -39,7 +39,7 @@ export default function Sharable({ trackName, onClose }) {
           onClose();
         }}
       >
-        Zamknij
+        Anuluj
       </header>
       {users.map((user, index) => (
         <div key={index} id={user} className="share">

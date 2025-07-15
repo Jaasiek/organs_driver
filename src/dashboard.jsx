@@ -9,7 +9,8 @@ export default function Dashboard() {
   const [title, setTitle] = useState("");
 
   useEffect(() => {
-    const handlePlay = (data) => {
+    const handleSelectedTrack = (data) => {
+      setSteps(`0/${data.steps}`);
       setTitle(data.title);
     };
 
@@ -25,9 +26,11 @@ export default function Dashboard() {
       }
     };
 
-    socket.on("track_selected", () => {
-      setSteps("0/12");
-    });
+    const handlePlay = (data) => {
+      setSteps(data.steps);
+    };
+
+    socket.on("track_selected", handleSelectedTrack);
 
     socket.on("play", handlePlay);
     socket.on("previoust_step_info", handlePrevioustStep);

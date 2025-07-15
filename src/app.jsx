@@ -9,7 +9,6 @@ import Combinations from "./components/combinations/combinations";
 import MIDI from "./components/MIDI/MIDI";
 import UserProfile from "./components/userProfile/userProfile";
 import Settings from "./components/settings/settings";
-import Sharable from "./components/sharable/sharable";
 
 export function App() {
   return (

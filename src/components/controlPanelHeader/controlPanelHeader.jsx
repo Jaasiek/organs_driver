@@ -14,7 +14,7 @@ export default function ControlPanelHeader() {
   useEffect(() => {
     setTimeout(() => {
       setUsername(localStorage.getItem("username"));
-    }, 1000);
+    }, 5);
   }, []);
 
   useEffect(() => {
@@ -31,7 +31,7 @@ export default function ControlPanelHeader() {
       }, 3000);
     };
 
-    const handlePrevioustStep = (data) => {
+    const handleMessage = (data) => {
       if (data.success === false) {
         setMessage(data.message);
         setFadeOut(false);
@@ -46,29 +46,35 @@ export default function ControlPanelHeader() {
       }
     };
 
-    const handleNextStep = (data) => {
-      if (data.success === false) {
-        setMessage(data.message);
-        setFadeOut(false);
-        setTogglePopUp(true);
+    const handleTrueFalseMessage = (data) => {
+      setMessage(data.message);
+      setFadeOut(false);
+      setTogglePopUp(true);
 
+      setTimeout(() => {
+        setFadeOut(true);
         setTimeout(() => {
-          setFadeOut(true);
-          setTimeout(() => {
-            setTogglePopUp(false);
-          }, 500);
-        }, 3000);
-      }
+          setTogglePopUp(false);
+        }, 500);
+      }, 3000);
     };
 
     socket.on("shared", handleShared);
-    socket.on("previoust_step_info", handlePrevioustStep);
-    socket.on("next_step_info", handleNextStep);
+    socket.on("previoust_step_info", handleMessage);
+    socket.on("next_step_info", handleMessage);
+    socket.on("creating_track_info", handleTrueFalseMessage);
+    socket.on("combination_creating_info", handleTrueFalseMessage);
+    socket.on("combination_editing_info", handleTrueFalseMessage);
+    socket.on("previoust_step_edit", handleMessage);
 
     return () => {
       socket.off("shared", handleShared);
-      socket.off("previoust_step_info", handlePrevioustStep);
-      socket.off("next_step_info", handleNextStep);
+      socket.off("previoust_step_info", handleMessage);
+      socket.off("next_step_info", handleMessage);
+      socket.off("creating_track_info", handleTrueFalseMessage);
+      socket.off("combination_creating_info", handleTrueFalseMessage);
+      socket.off("previoust_step_edit", handleMessage);
+      socket.off("combination_editing_info", handleTrueFalseMessage);
     };
   }, []);
 

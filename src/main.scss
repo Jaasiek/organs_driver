@@ -10,12 +10,12 @@ body {
 
   button,
   a {
-    transition: 0.2s;
+    transition: 0.1s;
   }
 
   button:active,
   a:active {
     transform: scale(0.9);
-    transition: 0.2s;
+    transition: 0.1s;
   }
 }

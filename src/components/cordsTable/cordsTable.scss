@@ -1,0 +1,35 @@
+@use "../../colors.scss";
+
+.cordsTable {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  width: 100%;
+
+  .cords {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 33%;
+    flex-wrap: wrap;
+
+    .cord {
+      width: 50%;
+      color: var(--white);
+      background-color: var(--cord-inactive);
+      border: 1px solid var(--cord-inactive);
+      transition: 0.2s;
+    }
+    .active {
+      background-color: var(--cord-active);
+      color: var(--black);
+      font-weight: 700;
+      transition: 0.2s;
+    }
+
+    h2 {
+      margin: 0;
+      margin-bottom: 1rem;
+    }
+  }
+}

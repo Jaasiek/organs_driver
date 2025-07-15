@@ -7,7 +7,6 @@
   justify-content: space-between;
   font-size: 2rem;
   font-weight: 600;
-  margin-bottom: 1rem;
   background-color: var(--background-color);
   position: sticky;
   padding: 1rem;
@@ -38,7 +37,7 @@
     left: 50%;
     transform: translateX(-50%);
     animation: slideDownFade 0.5s ease-out;
-    animation-fill-mode: forwards; // zachowuje ostatni stan
+    animation-fill-mode: forwards;
 
     h1 {
       font-size: 30px;

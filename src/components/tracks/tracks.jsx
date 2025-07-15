@@ -14,7 +14,7 @@ export default function Tracks() {
   const [togglePopUp, setTogglePopUp] = useState(true);
 
   function play(trackName) {
-    socket.emit("select_track", { title: trackName });
+    socket.emit("select_track", { track_name: trackName });
   }
 
   useEffect(() => {
