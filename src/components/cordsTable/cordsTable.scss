@@ -3,33 +3,55 @@
 .cordsTable {
   display: flex;
   justify-content: center;
+  flex-direction: column;
   gap: 2rem;
   width: 100%;
 
-  .cords {
+  .vocals {
+    width: 100%;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    gap: 2rem;
+
+    .cords {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 33%;
+      flex-wrap: wrap;
+
+      .cord {
+        width: 50%;
+        color: var(--white);
+        background-color: var(--cord-inactive);
+        border: 1px solid var(--cord-inactive);
+        transition: 0.2s;
+      }
+      .active {
+        background-color: var(--cord-active);
+        color: var(--black);
+        font-weight: 700;
+        transition: 0.2s;
+      }
+
+      h2 {
+        margin: 0;
+        margin-bottom: 1rem;
+      }
+    }
+  }
+
+  .editing {
+    width: 100%;
+    display: flex;
     align-items: center;
-    width: 33%;
-    flex-wrap: wrap;
-
-    .cord {
-      width: 50%;
-      color: var(--white);
-      background-color: var(--cord-inactive);
-      border: 1px solid var(--cord-inactive);
-      transition: 0.2s;
-    }
-    .active {
-      background-color: var(--cord-active);
-      color: var(--black);
-      font-weight: 700;
-      transition: 0.2s;
-    }
-
-    h2 {
-      margin: 0;
-      margin-bottom: 1rem;
+    justify-content: flex-end;
+    button {
+      background-color: transparent;
+      color: var(--primary-color);
+      font-size: 15px;
+      text-align: center;
+      border: none;
     }
   }
 }

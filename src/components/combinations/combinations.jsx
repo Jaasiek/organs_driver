@@ -37,8 +37,8 @@ export default function Combinations() {
     if (validTitle && cordsTableRefs.current) {
       const combination =
         cordsTableRefs.current[step - 1]?.getCombination() ?? [];
-      cordsTableRefs.current[step - 1]?.resetCombination();
-
+      // cordsTableRefs.current[step - 1]?.resetCombination();
+      sessionStorage.setItem(`step${step}`, combination);
       if (isEditing) {
         socket.emit("editing_combination", {
           active_cords: combination,
@@ -116,7 +116,12 @@ export default function Combinations() {
           <div className="steps">
             {Array.from({ length: step }, (_, index) => (
               <div key={index} className={`step${index + 1}`}>
-                <h3 onClick={() => toggleTable(index + 1)}>
+                <h3
+                  onClick={() => {
+                    toggleTable(index + 1);
+                    cordsTableRefs.current[index]?.edit();
+                  }}
+                >
                   Krok {index + 1}{" "}
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -139,9 +144,10 @@ export default function Combinations() {
                   }`}
                 >
                   <CordsTable
-                    creating={index + 1 === step && !isEditing}
+                    creating={true}
                     ref={(ref) => (cordsTableRefs.current[index] = ref)}
                     step={index + 1}
+                    toggleTable={toggleTable}
                   />
                 </div>
               </div>
@@ -149,7 +155,7 @@ export default function Combinations() {
           </div>
 
           <div className="buttons">
-            <button
+            {/* <button
               onClick={() => {
                 if (step > 1) {
                   editPrevioustStep();
@@ -158,7 +164,7 @@ export default function Combinations() {
               }}
             >
               Edytuj poprzedni
-            </button>
+            </button> */}
             <button
               onClick={() => {
                 setStep(step + 1);
