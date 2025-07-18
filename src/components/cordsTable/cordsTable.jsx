@@ -14,17 +14,15 @@ const CordsTable = forwardRef(function CordsTable(
 ) {
   const [activeCords, setActiveCords] = useState([]);
   const [creatingCords, setCreatingCords] = useState([]);
+  const [cordsBackUP, setCordsBackUP] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const creatingCordsRef = useRef();
 
   useImperativeHandle(ref, () => ({
     getCombination: () => creatingCordsRef.current,
-    resetCombination: () => {
-      setCreatingCords([]);
-      setActiveCords([]);
-    },
     edit: () => {
       setIsEditing(true);
+      setCordsBackUP(creatingCordsRef.current);
     },
     setCombination: (givenCombination) => {
       setCreatingCords(givenCombination);
@@ -300,6 +298,7 @@ const CordsTable = forwardRef(function CordsTable(
           <button
             onClick={() => {
               setIsEditing(false);
+              setCreatingCords(cordsBackUP);
               toggleTable(step);
             }}
           >

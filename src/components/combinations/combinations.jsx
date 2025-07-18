@@ -38,7 +38,6 @@ export default function Combinations() {
     if (validTitle && cordsTableRefs.current) {
       const combination =
         cordsTableRefs.current[step - 1]?.getCombination() ?? [];
-      sessionStorage.setItem(`step${step}`, combination);
 
       socket.emit("combination", {
         active_cords: combination,
@@ -49,13 +48,14 @@ export default function Combinations() {
       if (save) {
         setTimeout(() => {
           cordsTableRefs.current[step]?.setCombination(combination);
-        }, 5);
+        }, 1);
       }
     }
   };
 
   const confirmTrack = () => {
     sessionStorage.setItem("title", title);
+    confirmStep();
     socket.emit("select_track", { track_name: title });
   };
 
@@ -145,7 +145,6 @@ export default function Combinations() {
               onClick={() => {
                 confirmStep();
                 setStep(step + 1);
-                // setIsEditing(false);
                 toggleTable(step);
               }}
             >
@@ -155,7 +154,6 @@ export default function Combinations() {
               onClick={() => {
                 confirmStep({ save: true });
                 setStep(step + 1);
-                // setIsEditing(false);
                 toggleTable(step);
               }}
             >
