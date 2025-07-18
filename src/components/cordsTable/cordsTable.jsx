@@ -9,7 +9,7 @@ import {
 } from "react";
 
 const CordsTable = forwardRef(function CordsTable(
-  { creating, step, toggleTable },
+  { creating, step, toggleTable, title },
   ref
 ) {
   const [activeCords, setActiveCords] = useState([]);
@@ -24,9 +24,10 @@ const CordsTable = forwardRef(function CordsTable(
       setActiveCords([]);
     },
     edit: () => {
-      // setCreatingCords(activeCords);
       setIsEditing(true);
-      console.log("chuj");
+    },
+    setCombination: (givenCombination) => {
+      setCreatingCords(givenCombination);
     },
   }));
 
@@ -41,6 +42,15 @@ const CordsTable = forwardRef(function CordsTable(
         cordsSet.add(id);
       }
       return Array.from(cordsSet);
+    });
+  };
+
+  const saveCombination = () => {
+    socket.emit("editing_combination", {
+      active_cords: creatingCordsRef.current,
+      track_name: title,
+      step: step,
+      owner: localStorage.getItem("username"),
     });
   };
 
@@ -278,7 +288,15 @@ const CordsTable = forwardRef(function CordsTable(
       </div>
       {isEditing && (
         <div className="editing">
-          <button>Zapisz</button>
+          <button
+            onClick={() => {
+              setIsEditing(false);
+              toggleTable(step);
+              saveCombination();
+            }}
+          >
+            Zapisz
+          </button>
           <button
             onClick={() => {
               setIsEditing(false);

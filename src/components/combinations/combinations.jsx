@@ -3,12 +3,13 @@ import ControlPanelHeader from "../controlPanelHeader/controlPanelHeader";
 import CordsTable from "../cordsTable/cordsTable";
 import { useEffect, useState, useRef } from "react";
 import socket from "../../socket";
+import { route } from "preact-router";
 
 export default function Combinations() {
   const [title, setTitle] = useState("");
   const [step, setStep] = useState(1);
   const [validTitle, setValidTitle] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
+  // const [isEditing, setIsEditing] = useState(false);
   const [disabled, setDisabled] = useState([]);
   const actualStep = useRef(step);
   const cordsTableRefs = useRef([]);
@@ -33,45 +34,29 @@ export default function Combinations() {
     });
   };
 
-  const confirmStep = () => {
+  const confirmStep = (save = false) => {
     if (validTitle && cordsTableRefs.current) {
       const combination =
         cordsTableRefs.current[step - 1]?.getCombination() ?? [];
-      // cordsTableRefs.current[step - 1]?.resetCombination();
       sessionStorage.setItem(`step${step}`, combination);
-      if (isEditing) {
-        socket.emit("editing_combination", {
-          active_cords: combination,
-          track_name: title,
-          step: actualStep.current,
-          owner: localStorage.getItem("username"),
-        });
-        return;
-      }
 
       socket.emit("combination", {
         active_cords: combination,
         track_name: title,
         owner: localStorage.getItem("username"),
       });
+
+      if (save) {
+        setTimeout(() => {
+          cordsTableRefs.current[step]?.setCombination(combination);
+        }, 5);
+      }
     }
   };
 
   const confirmTrack = () => {
     sessionStorage.setItem("title", title);
-  };
-
-  const editPrevioustStep = () => {
-    const newStep = step - 1;
-    setStep(newStep);
-    actualStep.current = newStep;
-    setIsEditing(true);
-    cordsTableRefs.current[newStep - 1]?.edit();
-
-    socket.emit("previoust_step", {
-      track_name: title,
-      step_to_edit: newStep,
-    });
+    socket.emit("select_track", { track_name: title });
   };
 
   useEffect(() => {
@@ -96,6 +81,7 @@ export default function Combinations() {
       <ControlPanelHeader />
       {!validTitle && (
         <>
+          <h1>Podaj tytuł nowej kompozycji</h1>
           <form onSubmit={titleSubmit}>
             <input
               type="text"
@@ -109,7 +95,6 @@ export default function Combinations() {
         </>
       )}
 
-      {!validTitle && <h1>Podaj tytuł nowej kompozycji</h1>}
       {validTitle && (
         <>
           <h2>{title}</h2>
@@ -148,6 +133,7 @@ export default function Combinations() {
                     ref={(ref) => (cordsTableRefs.current[index] = ref)}
                     step={index + 1}
                     toggleTable={toggleTable}
+                    title={title}
                   />
                 </div>
               </div>
@@ -155,21 +141,11 @@ export default function Combinations() {
           </div>
 
           <div className="buttons">
-            {/* <button
-              onClick={() => {
-                if (step > 1) {
-                  editPrevioustStep();
-                  toggleTable(step - 1);
-                }
-              }}
-            >
-              Edytuj poprzedni
-            </button> */}
             <button
               onClick={() => {
-                setStep(step + 1);
                 confirmStep();
-                setIsEditing(false);
+                setStep(step + 1);
+                // setIsEditing(false);
                 toggleTable(step);
               }}
             >
@@ -177,7 +153,18 @@ export default function Combinations() {
             </button>
             <button
               onClick={() => {
+                confirmStep({ save: true });
+                setStep(step + 1);
+                // setIsEditing(false);
+                toggleTable(step);
+              }}
+            >
+              + kolejny krok (zachowaj kombinację)
+            </button>
+            <button
+              onClick={() => {
                 confirmTrack();
+                route("/controlPanel/gameMode");
               }}
             >
               Gotowe
