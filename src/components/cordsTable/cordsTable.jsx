@@ -144,6 +144,28 @@ const CordsTable = forwardRef(function CordsTable(
           >
             Choralbass 4'
           </div>
+          <div
+            className={`cord ${
+              activeCords.includes(100) || creatingCords.includes(100)
+                ? "active"
+                : ""
+            }`}
+            onClick={() => toggleCord(100)}
+            id="100"
+          >
+            P - I
+          </div>
+          <div
+            className={`cord ${
+              activeCords.includes(101) || creatingCords.includes(101)
+                ? "active"
+                : ""
+            }`}
+            onClick={() => toggleCord(101)}
+            id="101"
+          >
+            P - II
+          </div>
         </div>
         <div className="cords" id="manualST">
           <h2>Manuał I</h2>
@@ -154,7 +176,7 @@ const CordsTable = forwardRef(function CordsTable(
                 : ""
             }`}
             onClick={() => toggleCord(6)}
-            id="6"
+            id="8"
           >
             Prinzipal 8'
           </div>
@@ -201,6 +223,17 @@ const CordsTable = forwardRef(function CordsTable(
             id="10"
           >
             Mixtur 4f.
+          </div>
+          <div
+            className={`cord ${
+              activeCords.includes(102) || creatingCords.includes(102)
+                ? "active"
+                : ""
+            }`}
+            onClick={() => toggleCord(102)}
+            id="102"
+          >
+            I - II
           </div>
         </div>
         <div className="cords" id="manualND">
@@ -281,6 +314,17 @@ const CordsTable = forwardRef(function CordsTable(
             id="17"
           >
             Zimbel 3f.
+          </div>
+          <div
+            className={`cord ${
+              activeCords.includes(103) || creatingCords.includes(103)
+                ? "active"
+                : ""
+            }`}
+            onClick={() => toggleCord(103)}
+            id="103"
+          >
+            Tremolo
           </div>
         </div>
       </div>

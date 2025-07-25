@@ -125,7 +125,7 @@ export default function UserProfile() {
           <input
             type="password"
             name="password"
-            placeholder="Hasło"
+            placeholder="PIN"
             onChange={(e) => setPassword(e.target.value)}
           />
           {message && <p className="message">{message}</p>}
@@ -154,13 +154,13 @@ export default function UserProfile() {
           <input
             type="password"
             name="password"
-            placeholder="Hasło"
+            placeholder="PIN"
             onChange={(e) => setPassword(e.target.value)}
           />
           <input
             type="password"
             name="password"
-            placeholder="Hasło"
+            placeholder="PIN"
             onChange={(e) => setPasswordRep(e.target.value)}
           />
           {message && <p className="message">{message}</p>}
