@@ -1,12 +1,7 @@
 import "./dashboardHeader.scss";
 import { Clock } from "../clock/clock";
-import { useState } from "react";
-import socket from "../../socket";
 
-export default function DashboardHeader() {
-  const [info, setInfo] = useState("");
-  setInfo("TUTTI");
-
+export default function DashboardHeader({ info }) {
   return (
     <div className="dashboardHeader">
       <Clock />

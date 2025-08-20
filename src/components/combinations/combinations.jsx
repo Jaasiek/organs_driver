@@ -9,10 +9,11 @@ export default function Combinations() {
   const [title, setTitle] = useState("");
   const [step, setStep] = useState(1);
   const [validTitle, setValidTitle] = useState(false);
-  // const [isEditing, setIsEditing] = useState(false);
   const [disabled, setDisabled] = useState([]);
   const actualStep = useRef(step);
   const cordsTableRefs = useRef([]);
+  const lastCombinationRef = useRef([]);
+  const copyPendingRef = useRef(false);
 
   const titleSubmit = (event) => {
     event.preventDefault();
@@ -36,8 +37,11 @@ export default function Combinations() {
 
   const confirmStep = (save = false) => {
     if (validTitle && cordsTableRefs.current) {
+      const currentIndex = actualStep.current - 1;
       const combination =
-        cordsTableRefs.current[step - 1]?.getCombination() ?? [];
+        cordsTableRefs.current[currentIndex]?.getCombination() ?? [];
+
+      lastCombinationRef.current = combination;
 
       socket.emit("combination", {
         active_cords: combination,
@@ -46,11 +50,15 @@ export default function Combinations() {
       });
 
       if (save) {
-        setTimeout(() => {
-          cordsTableRefs.current[step]?.setCombination(combination);
-        }, 1);
+        copyPendingRef.current = true;
       }
     }
+  };
+
+  const handleNextStepButton = () => {
+    confirmStep(true); // bez obiektu {save:true}, bo confirmStep przyjmuje bool
+    setStep((prev) => prev + 1);
+    toggleTable(actualStep.current); // użyj aktualnego ref
   };
 
   const confirmTrack = () => {
@@ -67,13 +75,28 @@ export default function Combinations() {
     };
 
     socket.on("creating_track_info", handleValidTitle);
+    socket.on("save_step", handleNextStepButton);
 
     return () => {
       socket.off("creating_track_info", handleValidTitle);
+      socket.off("save_step", handleNextStepButton);
     };
   }, []);
   useEffect(() => {
     actualStep.current = step;
+  }, [step]);
+
+  useEffect(() => {
+    if (!copyPendingRef.current) return;
+    // poczekaj na render nowego kroku
+    const id = requestAnimationFrame(() => {
+      const nextIndex = step - 1; // nowy krok ma index step-1
+      cordsTableRefs.current[nextIndex]?.setCombination(
+        lastCombinationRef.current
+      );
+      copyPendingRef.current = false;
+    });
+    return () => cancelAnimationFrame(id);
   }, [step]);
 
   return (
@@ -143,18 +166,16 @@ export default function Combinations() {
           <div className="buttons">
             <button
               onClick={() => {
-                confirmStep();
-                setStep(step + 1);
-                toggleTable(step);
+                confirmStep(false);
+                setStep((prev) => prev + 1);
+                toggleTable(actualStep.current);
               }}
             >
               + kolejny krok
             </button>
             <button
               onClick={() => {
-                confirmStep({ save: true });
-                setStep(step + 1);
-                toggleTable(step);
+                handleNextStepButton();
               }}
             >
               + kolejny krok (zachowaj kombinację)

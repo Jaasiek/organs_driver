@@ -9,7 +9,7 @@ import {
 } from "react";
 
 const CordsTable = forwardRef(function CordsTable(
-  { creating, step, toggleTable, title },
+  { creating, step, toggleTable, title, playing },
   ref
 ) {
   const [activeCords, setActiveCords] = useState([]);
@@ -30,17 +30,28 @@ const CordsTable = forwardRef(function CordsTable(
   }));
 
   const toggleCord = (id) => {
-    if (!creating) return;
-
-    setCreatingCords((prev) => {
-      const cordsSet = new Set(prev);
-      if (cordsSet.has(id)) {
-        cordsSet.delete(id);
-      } else {
-        cordsSet.add(id);
-      }
-      return Array.from(cordsSet);
-    });
+    if (creating) {
+      setCreatingCords((prev) => {
+        const cordsSet = new Set(prev);
+        if (cordsSet.has(id)) {
+          cordsSet.delete(id);
+        } else {
+          cordsSet.add(id);
+        }
+        return Array.from(cordsSet);
+      });
+    }
+    if (playing) {
+      setActiveCords((prev) => {
+        const cordsSet = new Set(prev);
+        if (cordsSet.has(id)) {
+          cordsSet.delete(id);
+        } else {
+          cordsSet.add(id);
+        }
+        return Array.from(cordsSet);
+      });
+    }
   };
 
   const saveCombination = () => {
@@ -65,11 +76,28 @@ const CordsTable = forwardRef(function CordsTable(
       }
     };
 
+    const handleRegisters = (data) => {
+      toggleCord(data.number);
+    };
+
+    const handleTUTTI = () => {
+      setActiveCords([
+        1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 100, 101, 102,
+      ]);
+    };
+
+    const handleCancel = () => {
+      setActiveCords([]);
+    };
+
     socket.on("play", handleCordsActivation);
     socket.on("next_step_info", handleCordsActivation);
     socket.on("previoust_step_info", handleCordsActivation);
     socket.on("get_combination", handleCreatedCombination);
     socket.on("previoust_step_edit", handleCordsActivation);
+    socket.on("registers", handleRegisters);
+    socket.on("TUTTI", handleTUTTI);
+    socket.on("clear", handleCancel);
 
     return () => {
       socket.off("play", handleCordsActivation);
@@ -77,6 +105,9 @@ const CordsTable = forwardRef(function CordsTable(
       socket.off("previoust_step_info", handleCordsActivation);
       socket.off("get_combination", handleCreatedCombination);
       socket.off("previoust_step_edit", handleCordsActivation);
+      socket.off("registers", handleRegisters);
+      socket.off("TUTTI", handleTUTTI);
+      socket.off("clear", handleCancel);
     };
   }, []);
 
@@ -95,10 +126,12 @@ const CordsTable = forwardRef(function CordsTable(
                 ? "active"
                 : ""
             }`}
-            onClick={() => toggleCord(1)}
-            id="1"
+            onClick={() => {
+              if (creating) toggleCord(1);
+            }}
+            id="2"
           >
-            Prinzipal-bass 16'
+            Subbass 16'
           </div>
           <div
             className={`cord ${
@@ -106,10 +139,12 @@ const CordsTable = forwardRef(function CordsTable(
                 ? "active"
                 : ""
             }`}
-            onClick={() => toggleCord(2)}
-            id="2"
+            onClick={() => {
+              if (creating) toggleCord(2);
+            }}
+            id="3"
           >
-            Subbass 16'
+            Oktavbass 8'
           </div>
           <div
             className={`cord ${
@@ -117,10 +152,12 @@ const CordsTable = forwardRef(function CordsTable(
                 ? "active"
                 : ""
             }`}
-            onClick={() => toggleCord(3)}
-            id="3"
+            onClick={() => {
+              if (creating) toggleCord(3);
+            }}
+            id="4"
           >
-            Oktavbass 8'
+            Gemshorn 8'
           </div>
           <div
             className={`cord ${
@@ -128,18 +165,9 @@ const CordsTable = forwardRef(function CordsTable(
                 ? "active"
                 : ""
             }`}
-            onClick={() => toggleCord(4)}
-            id="4"
-          >
-            Fletbas 8'
-          </div>
-          <div
-            className={`cord ${
-              activeCords.includes(5) || creatingCords.includes(5)
-                ? "active"
-                : ""
-            }`}
-            onClick={() => toggleCord(5)}
+            onClick={() => {
+              if (creating) toggleCord(4);
+            }}
             id="5"
           >
             Choralbass 4'
@@ -150,7 +178,9 @@ const CordsTable = forwardRef(function CordsTable(
                 ? "active"
                 : ""
             }`}
-            onClick={() => toggleCord(100)}
+            onClick={() => {
+              if (creating) toggleCord(100);
+            }}
             id="100"
           >
             P - I
@@ -161,24 +191,42 @@ const CordsTable = forwardRef(function CordsTable(
                 ? "active"
                 : ""
             }`}
-            onClick={() => toggleCord(101)}
+            onClick={() => {
+              if (creating) toggleCord(101);
+            }}
             id="101"
           >
             P - II
           </div>
         </div>
+
         <div className="cords" id="manualST">
           <h2>Manuał I</h2>
+          <div
+            className={`cord ${
+              activeCords.includes(5) || creatingCords.includes(5)
+                ? "active"
+                : ""
+            }`}
+            onClick={() => {
+              if (creating) toggleCord(5);
+            }}
+            id="8"
+          >
+            Prinzipal 8'
+          </div>
           <div
             className={`cord ${
               activeCords.includes(6) || creatingCords.includes(6)
                 ? "active"
                 : ""
             }`}
-            onClick={() => toggleCord(6)}
-            id="8"
+            onClick={() => {
+              if (creating) toggleCord(6);
+            }}
+            id="7"
           >
-            Prinzipal 8'
+            Gamba 8'
           </div>
           <div
             className={`cord ${
@@ -186,10 +234,12 @@ const CordsTable = forwardRef(function CordsTable(
                 ? "active"
                 : ""
             }`}
-            onClick={() => toggleCord(7)}
-            id="7"
+            onClick={() => {
+              if (creating) toggleCord(7);
+            }}
+            id="8"
           >
-            Gamba 8'
+            Prestant 4'
           </div>
           <div
             className={`cord ${
@@ -197,10 +247,12 @@ const CordsTable = forwardRef(function CordsTable(
                 ? "active"
                 : ""
             }`}
-            onClick={() => toggleCord(8)}
-            id="8"
+            onClick={() => {
+              if (creating) toggleCord(8);
+            }}
+            id="9"
           >
-            Oktave 4'
+            Nasard 2 2/3'
           </div>
           <div
             className={`cord ${
@@ -208,18 +260,9 @@ const CordsTable = forwardRef(function CordsTable(
                 ? "active"
                 : ""
             }`}
-            onClick={() => toggleCord(9)}
-            id="9"
-          >
-            Nasard 2 2/3'
-          </div>
-          <div
-            className={`cord ${
-              activeCords.includes(10) || creatingCords.includes(10)
-                ? "active"
-                : ""
-            }`}
-            onClick={() => toggleCord(10)}
+            onClick={() => {
+              if (creating) toggleCord(9);
+            }}
             id="10"
           >
             Mixtur 4f.
@@ -230,24 +273,42 @@ const CordsTable = forwardRef(function CordsTable(
                 ? "active"
                 : ""
             }`}
-            onClick={() => toggleCord(102)}
+            onClick={() => {
+              if (creating) toggleCord(102);
+            }}
             id="102"
           >
             I - II
           </div>
         </div>
+
         <div className="cords" id="manualND">
           <h2>Manuał II</h2>
+          <div
+            className={`cord ${
+              activeCords.includes(10) || creatingCords.includes(10)
+                ? "active"
+                : ""
+            }`}
+            onClick={() => {
+              if (creating) toggleCord(10);
+            }}
+            id="11"
+          >
+            Rohrgedeckt 8'
+          </div>
           <div
             className={`cord ${
               activeCords.includes(11) || creatingCords.includes(11)
                 ? "active"
                 : ""
             }`}
-            onClick={() => toggleCord(11)}
-            id="11"
+            onClick={() => {
+              if (creating) toggleCord(11);
+            }}
+            id="12"
           >
-            Rohrgedeckt 8'
+            Gedackt 8'
           </div>
           <div
             className={`cord ${
@@ -255,10 +316,12 @@ const CordsTable = forwardRef(function CordsTable(
                 ? "active"
                 : ""
             }`}
-            onClick={() => toggleCord(12)}
-            id="12"
+            onClick={() => {
+              if (creating) toggleCord(12);
+            }}
+            id="13"
           >
-            Gedackt 8'
+            Oktave 4'
           </div>
           <div
             className={`cord ${
@@ -266,10 +329,12 @@ const CordsTable = forwardRef(function CordsTable(
                 ? "active"
                 : ""
             }`}
-            onClick={() => toggleCord(13)}
-            id="13"
+            onClick={() => {
+              if (creating) toggleCord(13);
+            }}
+            id="14"
           >
-            Prestant 4'
+            Gedacktflote 4'
           </div>
           <div
             className={`cord ${
@@ -277,10 +342,12 @@ const CordsTable = forwardRef(function CordsTable(
                 ? "active"
                 : ""
             }`}
-            onClick={() => toggleCord(14)}
-            id="14"
+            onClick={() => {
+              if (creating) toggleCord(14);
+            }}
+            id="15"
           >
-            Gedacktflote 4'
+            Klein-prinzipal 2'
           </div>
           <div
             className={`cord ${
@@ -288,10 +355,12 @@ const CordsTable = forwardRef(function CordsTable(
                 ? "active"
                 : ""
             }`}
-            onClick={() => toggleCord(15)}
-            id="15"
+            onClick={() => {
+              if (creating) toggleCord(15);
+            }}
+            id="16"
           >
-            Klein-prinzipal 2'
+            Spitzquinte 1 1/3'
           </div>
           <div
             className={`cord ${
@@ -299,18 +368,9 @@ const CordsTable = forwardRef(function CordsTable(
                 ? "active"
                 : ""
             }`}
-            onClick={() => toggleCord(16)}
-            id="16"
-          >
-            Spitzquinte 1 1/3'
-          </div>
-          <div
-            className={`cord ${
-              activeCords.includes(17) || creatingCords.includes(17)
-                ? "active"
-                : ""
-            }`}
-            onClick={() => toggleCord(17)}
+            onClick={() => {
+              if (creating) toggleCord(16);
+            }}
             id="17"
           >
             Zimbel 3f.
@@ -321,13 +381,16 @@ const CordsTable = forwardRef(function CordsTable(
                 ? "active"
                 : ""
             }`}
-            onClick={() => toggleCord(103)}
+            onClick={() => {
+              if (creating) toggleCord(103);
+            }}
             id="103"
           >
             Tremolo
           </div>
         </div>
       </div>
+
       {isEditing && (
         <div className="editing">
           <button

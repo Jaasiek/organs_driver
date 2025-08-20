@@ -89,7 +89,12 @@ export default function ControlPanelHeader() {
 
   return (
     <div className="controlPanelHeader">
-      <Link href="/controlPanel">
+      <Link
+        href="/controlPanel"
+        onClick={() => {
+          socket.emit("HOME");
+        }}
+      >
         <img src={logo} alt="Logo" className="logo" />
       </Link>
       <p>{username}</p>

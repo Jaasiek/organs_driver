@@ -49,7 +49,7 @@ export default function GameMode() {
           {mode}
         </button>
       </div>
-      <CordsTable />
+      <CordsTable playing={true} />
       <div className="buttons">
         <button onClick={previoustStep}>◀</button>
         <button onClick={nextStep}>▶</button>

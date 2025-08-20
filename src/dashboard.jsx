@@ -8,6 +8,7 @@ export default function Dashboard() {
   const [connection, setConnections] = useState([]);
   const [title, setTitle] = useState("");
   const [cres, setCres] = useState(0);
+  const [info, setInfo] = useState("");
 
   const toggleConnection = (id) => {
     setConnections((prev) => {
@@ -22,12 +23,14 @@ export default function Dashboard() {
   };
   useEffect(() => {
     const handleSelectedTrack = (data) => {
+      setInfo((prevInfo) => (prevInfo === "TUTTI" ? "" : prevInfo));
       setSteps(`0/${data.steps}`);
       setConnections([]);
       setTitle(data.title);
     };
 
-    const handlePrevioustStep = (data) => {
+    const handleSteps = (data) => {
+      setInfo((prevInfo) => (prevInfo === "TUTTI" ? "" : prevInfo));
       if (data.success === true) {
         setSteps(data.steps);
         setConnections([]);
@@ -46,41 +49,19 @@ export default function Dashboard() {
       }
     };
 
-    const handleNextStep = (data) => {
-      if (data.success === true) {
-        setSteps(data.steps);
-        setConnections([]);
-        if (data.combination.includes(100)) {
-          toggleConnection("P-I");
-        }
-        if (data.combination.includes(101)) {
-          toggleConnection("P-II");
-        }
-        if (data.combination.includes(102)) {
-          toggleConnection("I-II");
-        }
-        if (data.combination.includes(103)) {
-          toggleConnection("Tremolo");
-        }
+    const handleRegisters = (data) => {
+      setInfo((prevInfo) => (prevInfo === "TUTTI" ? "" : prevInfo));
+      if (data.number == 100) {
+        toggleConnection("P-I");
       }
-    };
-
-    const handlePlay = (data) => {
-      if (data.success === true) {
-        setSteps(data.steps);
-        setConnections([]);
-        if (data.combination.includes(100)) {
-          toggleConnection("P-I");
-        }
-        if (data.combination.includes(101)) {
-          toggleConnection("P-II");
-        }
-        if (data.combination.includes(102)) {
-          toggleConnection("I-II");
-        }
-        if (data.combination.includes(103)) {
-          toggleConnection("Tremolo");
-        }
+      if (data.number == 101) {
+        toggleConnection("P-II");
+      }
+      if (data.number == 102) {
+        toggleConnection("I-II");
+      }
+      if (data.number == 103) {
+        toggleConnection("Tremolo");
       }
     };
 
@@ -88,32 +69,59 @@ export default function Dashboard() {
       setCres(data.cres / 4);
     };
 
+    const handleTUTTI = () => {
+      setConnections(["P-I", "P-II", "I-II"]);
+      setInfo("TUTTI");
+    };
+
+    const handleCancel = () => {
+      console.log("Cancel received");
+      setConnections([]);
+      setInfo("");
+    };
+
+    const handleHome = () => {
+      setConnections([]);
+      setSteps("0/0");
+      setTitle("");
+      setInfo("");
+    };
+
     socket.on("track_selected", handleSelectedTrack);
 
-    socket.on("play", handlePlay);
-    socket.on("previoust_step_info", handlePrevioustStep);
-    socket.on("next_step_info", handleNextStep);
+    socket.on("play", handleSteps);
+    socket.on("previoust_step_info", handleSteps);
+    socket.on("next_step_info", handleSteps);
     socket.on("crescendo", handleCrescendo);
+    socket.on("registers", handleRegisters);
+    socket.on("TUTTI", handleTUTTI);
+    socket.on("clear", handleCancel);
+    socket.on("home_reset", handleHome);
+
     return () => {
-      socket.off("play", handlePlay);
-      socket.off("previoust_step_info", handlePrevioustStep);
-      socket.off("next_step_info", handleNextStep);
+      socket.off("play", handleSteps);
+      socket.off("previoust_step_info", handleSteps);
+      socket.off("next_step_info", handleSteps);
       socket.off("crescendo", handleCrescendo);
+      socket.off("registers", handleRegisters);
+      socket.off("TUTTI", handleTUTTI);
+      socket.off("clear", handleCancel);
     };
   }, []);
 
   return (
     <div className="dashboard">
-      <DashboardHeader />
+      <DashboardHeader info={info} />
       <div className="steps">
         <h1>{steps}</h1>
       </div>
       <div className="connections">
-        {connection.map((conn, index) => (
-          <div className="connection" key={index}>
-            {conn}
-          </div>
-        ))}
+        {connection.includes("P-I") && <div className="connection">P-I</div>}
+        {connection.includes("P-II") && <div className="connection">P-II</div>}
+        {connection.includes("I-II") && <div className="connection">I-II</div>}
+        {connection.includes("Tremolo") && (
+          <div className="connection">Tremolo</div>
+        )}
       </div>
       <div className="title">
         <h1>{title}</h1>
