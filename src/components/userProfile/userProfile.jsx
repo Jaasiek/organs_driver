@@ -119,12 +119,15 @@ export default function UserProfile() {
           <input
             type="text"
             name="username"
+            data-osk
             placeholder="Nazwa użytkownika"
             onChange={(e) => setUsername(e.target.value)}
           />
           <input
             type="password"
             name="password"
+            data-osk
+            data-osk-layout="numeric"
             placeholder="PIN"
             onChange={(e) => setPassword(e.target.value)}
           />
@@ -148,18 +151,23 @@ export default function UserProfile() {
           <input
             type="text"
             name="username"
+            data-osk
             placeholder="Nazwa użytkownika"
             onChange={(e) => setUsername(e.target.value)}
           />
           <input
             type="password"
             name="password"
+            data-osk
+            data-osk-layout="numeric"
             placeholder="PIN"
             onChange={(e) => setPassword(e.target.value)}
           />
           <input
             type="password"
             name="password"
+            data-osk
+            data-osk-layout="numeric"
             placeholder="PIN"
             onChange={(e) => setPasswordRep(e.target.value)}
           />

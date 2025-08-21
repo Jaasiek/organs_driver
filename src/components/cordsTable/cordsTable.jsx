@@ -126,10 +126,6 @@ const CordsTable = forwardRef(function CordsTable(
                 ? "active"
                 : ""
             }`}
-            onClick={() => {
-              if (creating) toggleCord(1);
-            }}
-            id="2"
           >
             Subbass 16'
           </div>
@@ -139,10 +135,6 @@ const CordsTable = forwardRef(function CordsTable(
                 ? "active"
                 : ""
             }`}
-            onClick={() => {
-              if (creating) toggleCord(2);
-            }}
-            id="3"
           >
             Oktavbass 8'
           </div>
@@ -152,10 +144,6 @@ const CordsTable = forwardRef(function CordsTable(
                 ? "active"
                 : ""
             }`}
-            onClick={() => {
-              if (creating) toggleCord(3);
-            }}
-            id="4"
           >
             Gemshorn 8'
           </div>
@@ -165,10 +153,6 @@ const CordsTable = forwardRef(function CordsTable(
                 ? "active"
                 : ""
             }`}
-            onClick={() => {
-              if (creating) toggleCord(4);
-            }}
-            id="5"
           >
             Choralbass 4'
           </div>
@@ -178,10 +162,6 @@ const CordsTable = forwardRef(function CordsTable(
                 ? "active"
                 : ""
             }`}
-            onClick={() => {
-              if (creating) toggleCord(100);
-            }}
-            id="100"
           >
             P - I
           </div>
@@ -191,10 +171,6 @@ const CordsTable = forwardRef(function CordsTable(
                 ? "active"
                 : ""
             }`}
-            onClick={() => {
-              if (creating) toggleCord(101);
-            }}
-            id="101"
           >
             P - II
           </div>
@@ -208,10 +184,6 @@ const CordsTable = forwardRef(function CordsTable(
                 ? "active"
                 : ""
             }`}
-            onClick={() => {
-              if (creating) toggleCord(5);
-            }}
-            id="8"
           >
             Prinzipal 8'
           </div>
@@ -221,10 +193,6 @@ const CordsTable = forwardRef(function CordsTable(
                 ? "active"
                 : ""
             }`}
-            onClick={() => {
-              if (creating) toggleCord(6);
-            }}
-            id="7"
           >
             Gamba 8'
           </div>
@@ -234,10 +202,6 @@ const CordsTable = forwardRef(function CordsTable(
                 ? "active"
                 : ""
             }`}
-            onClick={() => {
-              if (creating) toggleCord(7);
-            }}
-            id="8"
           >
             Prestant 4'
           </div>
@@ -247,10 +211,6 @@ const CordsTable = forwardRef(function CordsTable(
                 ? "active"
                 : ""
             }`}
-            onClick={() => {
-              if (creating) toggleCord(8);
-            }}
-            id="9"
           >
             Nasard 2 2/3'
           </div>
@@ -260,10 +220,6 @@ const CordsTable = forwardRef(function CordsTable(
                 ? "active"
                 : ""
             }`}
-            onClick={() => {
-              if (creating) toggleCord(9);
-            }}
-            id="10"
           >
             Mixtur 4f.
           </div>
@@ -273,10 +229,6 @@ const CordsTable = forwardRef(function CordsTable(
                 ? "active"
                 : ""
             }`}
-            onClick={() => {
-              if (creating) toggleCord(102);
-            }}
-            id="102"
           >
             I - II
           </div>
@@ -290,10 +242,6 @@ const CordsTable = forwardRef(function CordsTable(
                 ? "active"
                 : ""
             }`}
-            onClick={() => {
-              if (creating) toggleCord(10);
-            }}
-            id="11"
           >
             Rohrgedeckt 8'
           </div>
@@ -303,10 +251,6 @@ const CordsTable = forwardRef(function CordsTable(
                 ? "active"
                 : ""
             }`}
-            onClick={() => {
-              if (creating) toggleCord(11);
-            }}
-            id="12"
           >
             Gedackt 8'
           </div>
@@ -316,10 +260,6 @@ const CordsTable = forwardRef(function CordsTable(
                 ? "active"
                 : ""
             }`}
-            onClick={() => {
-              if (creating) toggleCord(12);
-            }}
-            id="13"
           >
             Oktave 4'
           </div>
@@ -329,10 +269,6 @@ const CordsTable = forwardRef(function CordsTable(
                 ? "active"
                 : ""
             }`}
-            onClick={() => {
-              if (creating) toggleCord(13);
-            }}
-            id="14"
           >
             Gedacktflote 4'
           </div>
@@ -342,10 +278,6 @@ const CordsTable = forwardRef(function CordsTable(
                 ? "active"
                 : ""
             }`}
-            onClick={() => {
-              if (creating) toggleCord(14);
-            }}
-            id="15"
           >
             Klein-prinzipal 2'
           </div>
@@ -355,10 +287,6 @@ const CordsTable = forwardRef(function CordsTable(
                 ? "active"
                 : ""
             }`}
-            onClick={() => {
-              if (creating) toggleCord(15);
-            }}
-            id="16"
           >
             Spitzquinte 1 1/3'
           </div>
@@ -368,23 +296,15 @@ const CordsTable = forwardRef(function CordsTable(
                 ? "active"
                 : ""
             }`}
-            onClick={() => {
-              if (creating) toggleCord(16);
-            }}
-            id="17"
           >
             Zimbel 3f.
           </div>
           <div
             className={`cord ${
-              activeCords.includes(103) || creatingCords.includes(103)
+              activeCords.includes(32) || creatingCords.includes(32)
                 ? "active"
                 : ""
             }`}
-            onClick={() => {
-              if (creating) toggleCord(103);
-            }}
-            id="103"
           >
             Tremolo
           </div>

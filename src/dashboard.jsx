@@ -60,7 +60,7 @@ export default function Dashboard() {
       if (data.number == 102) {
         toggleConnection("I-II");
       }
-      if (data.number == 103) {
+      if (data.number == 32) {
         toggleConnection("Tremolo");
       }
     };

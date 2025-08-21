@@ -15,6 +15,8 @@ export default function Combinations() {
   const lastCombinationRef = useRef([]);
   const copyPendingRef = useRef(false);
 
+  socket.emit("registers_reset");
+
   const titleSubmit = (event) => {
     event.preventDefault();
     if (title.trim() != "") {
@@ -110,6 +112,7 @@ export default function Combinations() {
               type="text"
               className="title"
               placeholder="Nazwa utworu"
+              data-osk
               value={title}
               onChange={(e) => setTitle(e.target.value)}
             />
@@ -166,19 +169,10 @@ export default function Combinations() {
           <div className="buttons">
             <button
               onClick={() => {
-                confirmStep(false);
-                setStep((prev) => prev + 1);
-                toggleTable(actualStep.current);
-              }}
-            >
-              + kolejny krok
-            </button>
-            <button
-              onClick={() => {
                 handleNextStepButton();
               }}
             >
-              + kolejny krok (zachowaj kombinację)
+              + kolejny krok
             </button>
             <button
               onClick={() => {
