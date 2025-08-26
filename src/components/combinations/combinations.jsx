@@ -15,13 +15,14 @@ export default function Combinations() {
   const lastCombinationRef = useRef([]);
   const copyPendingRef = useRef(false);
 
-  socket.emit("registers_reset");
+  
 
   const titleSubmit = (event) => {
     event.preventDefault();
     if (title.trim() != "") {
       setTitle(title.trim());
       socket.emit("create_track", { track_name: title.trim() });
+      socket.emit("registers_reset");
     }
   };
 
