@@ -128,7 +128,7 @@ export default function UserProfile() {
             name="password"
             data-osk
             data-osk-layout="numeric"
-            placeholder="PIN"
+            placeholder="Hasło"
             onChange={(e) => setPassword(e.target.value)}
           />
           {message && <p className="message">{message}</p>}
@@ -160,7 +160,7 @@ export default function UserProfile() {
             name="password"
             data-osk
             data-osk-layout="numeric"
-            placeholder="PIN"
+            placeholder="Hasło"
             onChange={(e) => setPassword(e.target.value)}
           />
           <input
@@ -168,7 +168,7 @@ export default function UserProfile() {
             name="password"
             data-osk
             data-osk-layout="numeric"
-            placeholder="PIN"
+            placeholder="Hasło"
             onChange={(e) => setPasswordRep(e.target.value)}
           />
           {message && <p className="message">{message}</p>}

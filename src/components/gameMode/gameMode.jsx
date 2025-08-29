@@ -9,6 +9,10 @@ export default function GameMode() {
   const [title, setTitle] = useState(".");
   const [isPlaying, setIsPlaying] = useState(false);
 
+  useEffect(() => {
+    socket.emit("registers_reset");
+  }, []);
+
   function startPlaying() {
     socket.emit("start_playing");
   }
