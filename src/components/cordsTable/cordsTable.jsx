@@ -301,7 +301,7 @@ const CordsTable = forwardRef(function CordsTable(
           </div>
           <div
             className={`cord ${
-              activeCords.includes(32) || creatingCords.includes(32)
+              activeCords.includes(17) || creatingCords.includes(17)
                 ? "active"
                 : ""
             }`}

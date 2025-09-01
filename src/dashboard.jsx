@@ -43,7 +43,7 @@ export default function Dashboard() {
         if (data.combination.includes(102)) {
           toggleConnection("I-II");
         }
-        if (data.combination.includes(103)) {
+        if (data.combination.includes(17)) {
           toggleConnection("Tremolo");
         }
       }
@@ -60,7 +60,7 @@ export default function Dashboard() {
       if (data.number == 102) {
         toggleConnection("I-II");
       }
-      if (data.number == 32) {
+      if (data.number == 17) {
         toggleConnection("Tremolo");
       }
     };
