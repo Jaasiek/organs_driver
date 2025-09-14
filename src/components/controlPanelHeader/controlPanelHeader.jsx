@@ -48,6 +48,7 @@ export default function ControlPanelHeader() {
 
     const handleTrueFalseMessage = (data) => {
       setMessage(data.message);
+      console.log("directory_tree_cleared received:", data);
       setFadeOut(false);
       setTogglePopUp(true);
 
@@ -66,6 +67,7 @@ export default function ControlPanelHeader() {
     socket.on("combination_creating_info", handleTrueFalseMessage);
     socket.on("combination_editing_info", handleTrueFalseMessage);
     socket.on("previoust_step_edit", handleMessage);
+    socket.on("directory_tree_cleared", handleTrueFalseMessage);
 
     return () => {
       socket.off("shared", handleShared);
@@ -75,6 +77,7 @@ export default function ControlPanelHeader() {
       socket.off("combination_creating_info", handleTrueFalseMessage);
       socket.off("previoust_step_edit", handleMessage);
       socket.off("combination_editing_info", handleTrueFalseMessage);
+      socket.off("directory_tree_cleared", handleTrueFalseMessage);
     };
   }, []);
 

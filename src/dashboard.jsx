@@ -24,7 +24,11 @@ export default function Dashboard() {
   useEffect(() => {
     const handleSelectedTrack = (data) => {
       setInfo((prevInfo) => (prevInfo === "TUTTI" ? "" : prevInfo));
-      setSteps(`0/${data.steps}`);
+      if (data.steps) {
+        setSteps(`0/${data.steps}`);
+      } else {
+        setSteps("0/0");
+      }
       setConnections([]);
       setTitle(data.title);
     };

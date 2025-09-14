@@ -9,6 +9,7 @@ import GameMode from "./components/gameMode/gameMode";
 import Tracks from "./components/tracks/tracks";
 import Combinations from "./components/combinations/combinations";
 import MIDI from "./components/MIDI/MIDI";
+import MIDIPlayMode from "./components/midiPlayMode/midiPlayMode";
 import UserProfile from "./components/userProfile/userProfile";
 import Settings from "./components/settings/settings";
 
@@ -35,6 +36,7 @@ export function App() {
         <Tracks path="/controlPanel/tracks" />
         <Combinations path="/controlPanel/combinations" />
         <MIDI path="/controlPanel/MIDI" />
+        <MIDIPlayMode path="/controlPanel/MIDI/playMode" />
         <UserProfile path="/controlPanel/userProfile" />
         <Settings path="/controlPanel/settings" />
       </Router>

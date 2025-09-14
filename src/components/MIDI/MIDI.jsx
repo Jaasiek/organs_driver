@@ -2,6 +2,7 @@ import "./MIDI.scss";
 import ControlPanelHeader from "../controlPanelHeader/controlPanelHeader";
 import socket from "../../socket";
 import { useState, useEffect } from "react";
+import { Link } from "preact-router";
 
 export default function MIDI() {
   const [root, setRoot] = useState(null);
@@ -87,7 +88,14 @@ export default function MIDI() {
                 style={{ paddingLeft: depth * indent }}
               >
                 <div className="name">🎵 {f}</div>
-                <div className="button">Graj</div>
+                <Link
+                  href={`/controlPanel/MIDI/playMode?filePath=${encodeURIComponent(
+                    filePath
+                  )}&fileName=${encodeURIComponent(f)}`}
+                  className="button"
+                >
+                  Graj
+                </Link>
               </div>
             );
           })}

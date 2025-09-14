@@ -15,8 +15,6 @@ export default function Combinations() {
   const lastCombinationRef = useRef([]);
   const copyPendingRef = useRef(false);
 
-  
-
   const titleSubmit = (event) => {
     event.preventDefault();
     if (title.trim() != "") {
@@ -91,9 +89,9 @@ export default function Combinations() {
 
   useEffect(() => {
     if (!copyPendingRef.current) return;
-    // poczekaj na render nowego kroku
+
     const id = requestAnimationFrame(() => {
-      const nextIndex = step - 1; // nowy krok ma index step-1
+      const nextIndex = step - 1;
       cordsTableRefs.current[nextIndex]?.setCombination(
         lastCombinationRef.current
       );
